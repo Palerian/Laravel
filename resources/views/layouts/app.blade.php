@@ -18,6 +18,12 @@
         <div class="min-h-screen">
             @include('layouts.navigation')
 
+            @if(session('success'))
+                <div class="fixed top-4 right-4 bg-green-100 text-green-800 px-4 py-3 rounded shadow-sm alert">
+                    {{ session('success') }}
+                </div>
+            @endif
+
             <!-- Page Heading -->
             @isset($header)
                 <header class="bg-white shadow-sm border-b border-slate-200">

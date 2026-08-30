@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Controllers\GuruController;
 use App\Http\Controllers\Admin\AnalisisNilaiController;
-use App\Http\Controllers\Admin\GuruController;
+use App\Http\Controllers\Admin\GuruController as AdminGuruController;
 use App\Http\Controllers\Admin\JadwalController;
 use App\Http\Controllers\Admin\MapelController;
 use App\Http\Controllers\Admin\NilaiController;
@@ -22,6 +23,16 @@ Route::get('/profil', [PublicController::class, 'profil'])->name('public.profil'
 Route::get('/jurusan', [PublicController::class, 'jurusan'])->name('public.jurusan');
 Route::get('/guru', [PublicController::class, 'guru'])->name('public.guru');
 Route::get('/kontak', [PublicController::class, 'kontak'])->name('public.kontak');
+
+Route::get('/guru' ,[GuruController::class, 'index']); 
+Route::get('/guru/create' ,[GuruController::class, 'create']); 
+Route::get('/guru/edit/{id}' ,[GuruController::class, 'edit']); 
+Route::post('/guru/store' ,[GuruController::class, 'store']); 
+Route::get('/guru/{id}' ,[GuruController::class, 'show']); 
+Route::put('/guru/{id}' ,[GuruController::class, 'update']); 
+Route::delete('/guru/{id}' ,[GuruController::class, 'destroy']); 
+Route::get('/api/guru' ,[GuruController::class, 'api']); 
+Route::get('/simpan' ,[GuruController::class, 'simpan']);
 
 Route::get('/dashboard', DashboardController::class)
     ->middleware(['auth'])

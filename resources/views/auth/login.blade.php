@@ -1,7 +1,7 @@
 <x-guest-layout>
     <div class="mb-5 border-b border-slate-200 pb-3">
         <h1 class="text-lg font-bold text-slate-900">Masuk ke Portal SIA</h1>
-        <p class="text-xs text-slate-500 mt-0.5">Gunakan akun terdaftar siswi, dewan guru, atau administrator.</p>
+        <p class="text-xs text-slate-500 mt-0.5">Gunakan akun administrator terdaftar.</p>
     </div>
 
     <x-auth-session-status class="mb-4 text-xs font-semibold text-emerald-700 bg-emerald-50 p-2.5 rounded border border-emerald-200" :status="session('status')" />
@@ -61,14 +61,10 @@
     </form>
 
     <div class="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500">
-        <span class="font-semibold text-slate-700 block mb-1.5">Akun Demo Berdasarkan Jabatan:</span>
+        <span class="font-semibold text-slate-700 block mb-1.5">Akun Demo Administrator:</span>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-[11px]">
-            <div>• <strong class="text-slate-700">Siswi Teladan (Mafuyu):</strong> <span class="font-mono text-purple-700">mafuyu@murid.miyamasuzaka.test</span></div>
             <div>• <strong class="text-slate-700">Super Administrator:</strong> <span class="font-mono text-purple-700">admin@miyamasuzaka.test</span></div>
             <div>• <strong class="text-slate-700">Kepala Sekolah:</strong> <span class="font-mono text-purple-700">kepsek@miyamasuzaka.test</span></div>
-            <div>• <strong class="text-slate-700">Kepala Tata Usaha:</strong> <span class="font-mono text-purple-700">tu@miyamasuzaka.test</span></div>
-            <div>• <strong class="text-slate-700">Guru Kyudo:</strong> <span class="font-mono text-slate-600">hinomori@miyamasuzaka.test</span></div>
-            <div>• <strong class="text-slate-700">Siswi (Ichika):</strong> <span class="font-mono text-slate-600">ichika@murid.miyamasuzaka.test</span></div>
         </div>
         <div class="text-[10px] text-slate-400 mt-2">Semua password akun demo: <span class="font-mono text-slate-700 font-bold">password</span></div>
     </div>

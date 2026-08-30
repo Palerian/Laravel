@@ -1,0 +1,304 @@
+{
+  "info": {
+    "name": "Laravel 13 Guru API Tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.4.0/collection.json",
+    "description": "Postman collection for testing Laravel 13 Guru endpoints - API mengambil data dari database seeder"
+  },
+  "item": [
+    {
+      "name": "Guru - Basic Routes",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=a3",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/guru",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["guru"],
+          "query": []
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": [
+            "pm.test(\"Status code is 200\", function () {",
+            "  pm.response.to.have.status(200);",
+            "});",
+            "",
+            "pm.test(\"Response contains 'Daftar Guru'\", function () {",
+            "  pm.response.to.have.body('Daftar Guru');",
+            "});"
+          ],
+          "type": "text/javascript"
+        }
+      ]
+    },
+    {
+      "name": "Guru - Create Form",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=a3",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/guru/create",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["guru", "create"],
+          "query": []
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": [
+            "pm.test(\"Status code is 200\", function () {",
+            "  pm.response.to.have.status(200);",
+            "});",
+            "",
+            "pm.test(\"Response contains 'Form Tambah Guru'\", function () {",
+            "  pm.response.to.have.body('Form Tambah Guru');",
+            "});"
+          ],
+          "type": "text/javascript"
+        }
+      ]
+    },
+    {
+      "name": "Guru - Store Data (POST)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/x-www-form-urlencoded",
+            "type": "text"
+          },
+          {
+            "key": "X-CSRF-Token",
+            "value": "{{csvar}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "nama",
+              "value": "Budi",
+              "type": "text"
+            },
+            {
+              "key": "nip",
+              "value": "123456789",
+              "type": "text"
+            },
+            {
+              "key": "mata_pelajaran",
+              "value": "Matematika",
+              "type": "text"
+            },
+            {
+              "key": "no_telepon",
+              "value": "081234567890",
+              "type": "text"
+            },
+            {
+              "key": "_token",
+              "value": "{{csvar}}",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/guru/store",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "path": ["guru", "store"],
+          "query": []
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": [
+            "pm.test(\"Status code is 302\", function () {",
+            "  pm.response.to.have.status(302);",
+            "});",
+            "",
+            "pm.test(\"Redirect ke /guru\", function () {",
+            "  pm.response.to.redirectTo('http://127.0.0.1:8000/guru');",
+            "});"
+          ],
+          "type": "text/javascript"
+        }
+      ]
+    },
+    {
+      "name": "Guru - API Response JSON (Dari Database)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/guru",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["api", "guru"],
+          "query": []
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": [
+            "pm.test(\"Status code is 200\", function () {",
+            "  pm.response.to.have.status(200);",
+            "});",
+            "",
+            "pm.test(\"Response is valid JSON\", function () {",
+            "  var jsonData = pm.response.json();",
+            "  pm.test(\"JSON has status field\", function () {",
+            "    pm.expect(jsonData).to.have.property('status');",
+            "  });",
+            "",
+            "  pm.test(\"Status is true\", function () {",
+            "    pm.expect(jsonData.status).to.be.true;",
+            "  });",
+            "",
+            "  pm.test(\"Has message field\", function () {",
+            "    pm.expect(jsonData).to.have.property('message');",
+            "  });",
+            "",
+            "  pm.test(\"Has data field with guru records\", function () {",
+            "    pm.expect(jsonData).to.have.property('data');",
+            "    pm.expect(jsonData.data).to.be.an('array').that.is.not.empty;",
+            "  });",
+            "",
+            "  pm.test(\"Data contains guru fields\", function () {",
+            "    if (jsonData.data && jsonData.data.length > 0) {",
+            "      var firstGuru = jsonData.data[0];",
+            "      pm.test(\"Guru has id\", function () {",
+            "        pm.expect(firstGuru).to.have.property('id');",
+            "      });",
+            "      pm.test(\"Guru has nama\", function () {",
+            "        pm.expect(firstGuru).to.have.property('nama');",
+            "      });",
+            "      pm.test(\"Guru has nip\", function () {",
+            "        pm.expect(firstGuru).to.have.property('nip');",
+            "      });",
+            "      pm.test(\"Guru has mata_pelajaran\", function () {",
+            "        pm.expect(firstGuru).to.have.property('mata_pelajaran');",
+            "      });",
+            "      pm.test(\"Guru has email\", function () {",
+            "        pm.expect(firstGuru).to.have.property('email');",
+            "      });",
+            "      pm.test(\"Guru has jabatan\", function () {",
+            "        pm.expect(firstGuru).to.have.property('jabatan');",
+            "      });"
+            "    }"
+            ");"
+          ],
+          "type": "text/javascript"
+        }
+      ]
+    },
+    {
+      "name": "Guru - Simpan Redirect",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=a3",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/simpan",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "path": ["simpan"],
+          "query": []
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": [
+            "pm.test(\"Status code is 302\", function () {",
+            "  pm.response.to.have.status(302);",
+            "});",
+            "",
+            "pm.test(\"Redirect ke /guru\", function () {",
+            "  pm.response.to.redirectTo('http://127.0.0.1:8000/guru');",
+            "});"
+          ],
+          "type": "text/javascript"
+        }
+      ]
+    },
+    {
+      "name": "Guru - Show Detail",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=a3",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/guru/1",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["guru", "1"],
+          "query": []
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": [
+            "pm.test(\"Status code is 200\", function () {",
+            "  pm.response.to.have.status(200);",
+            "});",
+            "",
+            "pm.test(\"Response contains guru data\", function () {",
+            "  pm.response.to.have.body('Guru');",
+            "});"
+          ],
+          "type": "text/javascript"
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "csvar",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
